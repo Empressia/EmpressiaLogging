@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "EmpressiaLogging"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
