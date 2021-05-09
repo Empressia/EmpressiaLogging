@@ -1,5 +1,8 @@
 package jp.empressia.logging;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +17,27 @@ import java.util.logging.Logger;
  * @author すふぃあ
  */
 public final class ELogger {
+
+	static {
+		loadConfiguration();
+	}
+
+	/**
+	 * システムプロパティで明示的に更生されていない場合に、
+	 * クラスパス上のlogging.propertiesを読み込み、設定を上書きします。
+	 */
+	public static void loadConfiguration() {
+		// システムプロパティが設定されているなら、他で読み込まれているはずなので、ここでは読み込まない。
+		if(System.getProperty("java.util.logging.config.file") != null) { return; }
+		if(System.getProperty("java.util.logging.config.class") != null) { return; }
+		InputStream in = ClassLoader.getSystemResourceAsStream("logging.properties");
+		// 古い設定に、新しい設定で上書きします。
+		try {
+			LogManager.getLogManager().updateConfiguration(in, (k) -> ((o, n) -> n != null ? n : o));
+		} catch(IOException ex) {
+			throw new UncheckedIOException(ex);
+		}
+	}
 
 	/**
 	 * ロガーを取得します。
