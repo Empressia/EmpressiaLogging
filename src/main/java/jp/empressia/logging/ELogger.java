@@ -45,7 +45,7 @@ public final class ELogger {
 	 * @return ロガー
 	 */
 	public static final Logger log(Object caller) {
-		return ELogger.getLogger(caller.getClass().getName());
+		return ELogger.getLogger(caller.getClass().getPackageName());
 	}
 
 	/**
@@ -54,7 +54,7 @@ public final class ELogger {
 	 * @return ロガー
 	 */
 	public static final Logger log(Class<Object> caller) {
-		return ELogger.getLogger(caller.getName());
+		return ELogger.getLogger(caller.getPackageName());
 	}
 
 	/**
@@ -72,7 +72,7 @@ public final class ELogger {
 	 * @return ロガー
 	 */
 	public static final Logger logger(Object caller) {
-		return ELogger.getLogger(caller.getClass().getName());
+		return ELogger.getLogger(caller.getClass().getPackageName());
 	}
 
 	/**
@@ -81,7 +81,7 @@ public final class ELogger {
 	 * @return ロガー
 	 */
 	public static final Logger logger(Class<Object> caller) {
-		return ELogger.getLogger(caller.getName());
+		return ELogger.getLogger(caller.getPackageName());
 	}
 
 	/**
