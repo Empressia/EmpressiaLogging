@@ -5,33 +5,31 @@ plugins {
 }
 
 ext.moduleName = "jp.empressia.logging";
-// ext.local_network_repository_url;
-// ext.version;
+ext.junitVersion = "5.7.0";
+ext.hamcrestVersion = "2.2";
+archivesBaseName = moduleName;
 
 repositories {
 	mavenCentral();
 }
 
 dependencies {
+	// use JUnit test framework.
+	testImplementation(group:"org.junit.jupiter", name:"junit-jupiter-api", version:junitVersion);
+	testRuntimeOnly(group:"org.junit.jupiter", name:"junit-jupiter-engine", version:junitVersion);
+	testImplementation(group:"org.hamcrest", name:"hamcrest", version:hamcrestVersion);
 }
 
 tasks.withType(JavaCompile) {
 	options.encoding "UTF-8";
+	options.release = 11;
 	options.compilerArgs << "-parameters";
 }
 
 java {
+	modularity.inferModulePath = true;
 	withJavadocJar();
 	withSourcesJar();
-}
-
-jar {
-	archiveBaseName = moduleName;
-	manifest {
-		attributes (
-			"Automatic-Module-Name": moduleName
-		);
-	}
 }
 
 javadoc {
@@ -39,6 +37,10 @@ javadoc {
 	options.encoding "UTF-8";
 	options.addBooleanOption("html5", true);
 	options.addStringOption("Xdoclint:none", "-quiet");
+}
+
+test {
+	useJUnitPlatform();
 }
 
 publishing {
